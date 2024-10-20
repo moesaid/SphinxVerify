@@ -101,7 +101,7 @@ class AwsRequest {
       return jsonDecode(res) as Map<String, dynamic>;
     } catch (e) {
       debugPrint(e.toString());
-      throw Exception('AWS request failed');
+      throw Exception('AWS request failed: $e');
     }
   }
 }
