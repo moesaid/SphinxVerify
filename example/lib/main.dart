@@ -36,13 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final int _counter = 0;
 
   Future<void> _incrementCounter() async {
-    var sphinxVerify = SphinxVerify(
-      region: 'us-east-1',
+    final SphinxVerify sphinxVerify = SphinxVerify(
+      region: AwsRegionEnum.usEast1,
       accessKey: dotenv.env['ACCESS_KEY'] ?? '',
       secretKey: dotenv.env['SECRET_KEY'] ?? '',
     );
 
-    var res = await sphinxVerify.awsRekognition.moderateContent(
+    final LabelDetectionModel? res = await sphinxVerify.awsSDK.detectLabels(
       imageUrl:
           'https://imageio.forbes.com/specials-images/imageserve/5f469ea85cc82fc8d6083f05/Amazon-Founder-and-CEO-Jeff-Bezos/960x0.jpg',
     );

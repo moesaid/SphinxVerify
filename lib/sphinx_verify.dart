@@ -1,5 +1,7 @@
-/// A Very Good Project created by Very Good CLI.
+/// export 'src/sphinx_verify.dart';
 library;
 
-/// export 'src/sphinx_verify.dart';
+export 'sphinx_enums.dart';
+export 'sphinx_modesl.dart';
+// main export
 export 'src/sphinx_verify.dart';

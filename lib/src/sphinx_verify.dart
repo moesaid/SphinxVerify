@@ -1,3 +1,4 @@
+import 'package:sphinx_verify/src/Enums/aws_region_enum.dart';
 import 'package:sphinx_verify/src/Providers/aws_rekognition_provider.dart';
 
 /// {@template sphinx_verify}
@@ -12,7 +13,7 @@ class SphinxVerify {
   });
 
   /// aws region
-  final String region;
+  final AwsRegionEnum region;
 
   /// access key
   final String accessKey;
@@ -20,8 +21,9 @@ class SphinxVerify {
   /// secret key
   final String secretKey;
 
-  AwsRekognitionProvider get awsRekognition => AwsRekognitionProvider(
-        region: region,
+  /// aws rekognition provider
+  AwsRekognitionProvider get awsSDK => AwsRekognitionProvider(
+        region: region.code,
         accessKey: accessKey,
         secretKey: secretKey,
       );
