@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../polygon_model.dart';
+part of '../mark_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PolygonModelImpl _$$PolygonModelImplFromJson(Map<String, dynamic> json) =>
-    _$PolygonModelImpl(
+_$MarkModelImpl _$$MarkModelImplFromJson(Map<String, dynamic> json) =>
+    _$MarkModelImpl(
+      type: json['Type'] as String?,
       x: (json['X'] as num?)?.toDouble(),
       y: (json['Y'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$PolygonModelImplToJson(_$PolygonModelImpl instance) =>
+Map<String, dynamic> _$$MarkModelImplToJson(_$MarkModelImpl instance) =>
     <String, dynamic>{
+      'Type': instance.type,
       'X': instance.x,
       'Y': instance.y,
     };

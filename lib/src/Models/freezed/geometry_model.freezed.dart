@@ -23,7 +23,7 @@ mixin _$GeometryModel {
   @JsonKey(name: 'BoundingBox')
   BoundingBoxModel? get boundingBox => throw _privateConstructorUsedError;
   @JsonKey(name: 'Polygon')
-  List<PolygonModel>? get polygon => throw _privateConstructorUsedError;
+  List<MarkModel>? get polygon => throw _privateConstructorUsedError;
 
   /// Serializes this GeometryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $GeometryModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'BoundingBox') BoundingBoxModel? boundingBox,
-      @JsonKey(name: 'Polygon') List<PolygonModel>? polygon});
+      @JsonKey(name: 'Polygon') List<MarkModel>? polygon});
 
   $BoundingBoxModelCopyWith<$Res>? get boundingBox;
 }
@@ -74,7 +74,7 @@ class _$GeometryModelCopyWithImpl<$Res, $Val extends GeometryModel>
       polygon: freezed == polygon
           ? _value.polygon
           : polygon // ignore: cast_nullable_to_non_nullable
-              as List<PolygonModel>?,
+              as List<MarkModel>?,
     ) as $Val);
   }
 
@@ -103,7 +103,7 @@ abstract class _$$GeometryModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'BoundingBox') BoundingBoxModel? boundingBox,
-      @JsonKey(name: 'Polygon') List<PolygonModel>? polygon});
+      @JsonKey(name: 'Polygon') List<MarkModel>? polygon});
 
   @override
   $BoundingBoxModelCopyWith<$Res>? get boundingBox;
@@ -133,7 +133,7 @@ class __$$GeometryModelImplCopyWithImpl<$Res>
       polygon: freezed == polygon
           ? _value._polygon
           : polygon // ignore: cast_nullable_to_non_nullable
-              as List<PolygonModel>?,
+              as List<MarkModel>?,
     ));
   }
 }
@@ -143,7 +143,7 @@ class __$$GeometryModelImplCopyWithImpl<$Res>
 class _$GeometryModelImpl implements _GeometryModel {
   _$GeometryModelImpl(
       {@JsonKey(name: 'BoundingBox') this.boundingBox,
-      @JsonKey(name: 'Polygon') final List<PolygonModel>? polygon})
+      @JsonKey(name: 'Polygon') final List<MarkModel>? polygon})
       : _polygon = polygon;
 
   factory _$GeometryModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -152,10 +152,10 @@ class _$GeometryModelImpl implements _GeometryModel {
   @override
   @JsonKey(name: 'BoundingBox')
   final BoundingBoxModel? boundingBox;
-  final List<PolygonModel>? _polygon;
+  final List<MarkModel>? _polygon;
   @override
   @JsonKey(name: 'Polygon')
-  List<PolygonModel>? get polygon {
+  List<MarkModel>? get polygon {
     final value = _polygon;
     if (value == null) return null;
     if (_polygon is EqualUnmodifiableListView) return _polygon;
@@ -202,7 +202,7 @@ class _$GeometryModelImpl implements _GeometryModel {
 abstract class _GeometryModel implements GeometryModel {
   factory _GeometryModel(
           {@JsonKey(name: 'BoundingBox') final BoundingBoxModel? boundingBox,
-          @JsonKey(name: 'Polygon') final List<PolygonModel>? polygon}) =
+          @JsonKey(name: 'Polygon') final List<MarkModel>? polygon}) =
       _$GeometryModelImpl;
 
   factory _GeometryModel.fromJson(Map<String, dynamic> json) =
@@ -213,7 +213,7 @@ abstract class _GeometryModel implements GeometryModel {
   BoundingBoxModel? get boundingBox;
   @override
   @JsonKey(name: 'Polygon')
-  List<PolygonModel>? get polygon;
+  List<MarkModel>? get polygon;
 
   /// Create a copy of GeometryModel
   /// with the given fields replaced by the non-null parameter values.

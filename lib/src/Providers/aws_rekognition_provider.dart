@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:sphinx_verify/src/Enums/attribute_enum.dart';
 import 'package:sphinx_verify/src/Enums/label_features_enum.dart';
 import 'package:sphinx_verify/src/Enums/rekognition_service_enum.dart';
 import 'package:sphinx_verify/src/Helpers/aws_request.dart';
+import 'package:sphinx_verify/src/Models/face_detection_model.dart';
 import 'package:sphinx_verify/src/Models/label_detection_model.dart';
 import 'package:sphinx_verify/src/Models/moderate_content_model.dart';
 import 'package:sphinx_verify/src/Models/text_detection_model.dart';
@@ -171,6 +173,53 @@ class AwsRekognitionProvider {
 
       return data
           .map((e) => TextDetectionModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    }
+
+    return null;
+  }
+
+  /// detect faces
+  Future<List<FaceDetectionModel>?> detectFaces({
+    String? imageUrl,
+    File? file,
+    List<AttributeEnum>? attributes,
+  }) async {
+    // Read the image bytes
+    final Uint8List imageUint8List;
+
+    if (file != null) {
+      imageUint8List = await file.readAsBytes();
+    } else if (imageUrl != null) {
+      final imgRes = await http.get(Uri.parse(imageUrl));
+      imageUint8List = imgRes.bodyBytes;
+    } else {
+      throw Exception('Either imageUrl or file must be provided');
+    }
+
+    // Base64 encode the image bytes
+    final baseImage = base64Encode(imageUint8List);
+
+    // Build the payload
+    final payload = {
+      if (attributes != null && attributes.isNotEmpty)
+        'Attributes': attributes.map((e) => e.value).toList(),
+      'Image': {
+        'Bytes': baseImage,
+      },
+    };
+
+    // Call the sendRequest with the target operation
+    final res = await _awsRequest.sendRequest(
+      target: RekognitionServiceEnum.detectFaces.value,
+      payload: payload,
+    );
+
+    if (res.containsKey('FaceDetails')) {
+      final data = res['FaceDetails'] as List<dynamic>;
+
+      return data
+          .map((e) => FaceDetectionModel.fromJson(e as Map<String, dynamic>))
           .toList();
     }
 

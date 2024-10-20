@@ -13,7 +13,7 @@ _$GeometryModelImpl _$$GeometryModelImplFromJson(Map<String, dynamic> json) =>
           : BoundingBoxModel.fromJson(
               json['BoundingBox'] as Map<String, dynamic>),
       polygon: (json['Polygon'] as List<dynamic>?)
-          ?.map((e) => PolygonModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => MarkModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

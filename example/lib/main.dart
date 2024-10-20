@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       secretKey: dotenv.env['SECRET_KEY'] ?? '',
     );
 
-    final List<TextDetectionModel>? res = await sphinxVerify.awsSDK.detectText(
+    final List<FaceDetectionModel>? res = await sphinxVerify.awsSDK.detectFaces(
       imageUrl:
           'https://static.wixstatic.com/media/80832f_2b806497f7444ee5b02828bfed395a27~mv2.jpg/v1/fill/w_568,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/80832f_2b806497f7444ee5b02828bfed395a27~mv2.jpg',
     );
