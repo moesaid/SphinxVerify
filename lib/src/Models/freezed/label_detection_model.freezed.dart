@@ -22,8 +22,13 @@ LabelDetectionModel _$LabelDetectionModelFromJson(Map<String, dynamic> json) {
 mixin _$LabelDetectionModel {
   @JsonKey(name: 'LabelModelVersion')
   String? get labelModelVersion => throw _privateConstructorUsedError;
+  @JsonKey(name: 'OrientationCorrection')
+  String? get orientationCorrection => throw _privateConstructorUsedError;
   @JsonKey(name: 'Labels')
   List<LabelModel>? get labels => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ImageProperties')
+  ImagePropertiesModel? get imageProperties =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this LabelDetectionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +48,11 @@ abstract class $LabelDetectionModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'LabelModelVersion') String? labelModelVersion,
-      @JsonKey(name: 'Labels') List<LabelModel>? labels});
+      @JsonKey(name: 'OrientationCorrection') String? orientationCorrection,
+      @JsonKey(name: 'Labels') List<LabelModel>? labels,
+      @JsonKey(name: 'ImageProperties') ImagePropertiesModel? imageProperties});
+
+  $ImagePropertiesModelCopyWith<$Res>? get imageProperties;
 }
 
 /// @nodoc
@@ -62,18 +71,43 @@ class _$LabelDetectionModelCopyWithImpl<$Res, $Val extends LabelDetectionModel>
   @override
   $Res call({
     Object? labelModelVersion = freezed,
+    Object? orientationCorrection = freezed,
     Object? labels = freezed,
+    Object? imageProperties = freezed,
   }) {
     return _then(_value.copyWith(
       labelModelVersion: freezed == labelModelVersion
           ? _value.labelModelVersion
           : labelModelVersion // ignore: cast_nullable_to_non_nullable
               as String?,
+      orientationCorrection: freezed == orientationCorrection
+          ? _value.orientationCorrection
+          : orientationCorrection // ignore: cast_nullable_to_non_nullable
+              as String?,
       labels: freezed == labels
           ? _value.labels
           : labels // ignore: cast_nullable_to_non_nullable
               as List<LabelModel>?,
+      imageProperties: freezed == imageProperties
+          ? _value.imageProperties
+          : imageProperties // ignore: cast_nullable_to_non_nullable
+              as ImagePropertiesModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of LabelDetectionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ImagePropertiesModelCopyWith<$Res>? get imageProperties {
+    if (_value.imageProperties == null) {
+      return null;
+    }
+
+    return $ImagePropertiesModelCopyWith<$Res>(_value.imageProperties!,
+        (value) {
+      return _then(_value.copyWith(imageProperties: value) as $Val);
+    });
   }
 }
 
@@ -87,7 +121,12 @@ abstract class _$$LabelDetectionModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'LabelModelVersion') String? labelModelVersion,
-      @JsonKey(name: 'Labels') List<LabelModel>? labels});
+      @JsonKey(name: 'OrientationCorrection') String? orientationCorrection,
+      @JsonKey(name: 'Labels') List<LabelModel>? labels,
+      @JsonKey(name: 'ImageProperties') ImagePropertiesModel? imageProperties});
+
+  @override
+  $ImagePropertiesModelCopyWith<$Res>? get imageProperties;
 }
 
 /// @nodoc
@@ -104,17 +143,27 @@ class __$$LabelDetectionModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? labelModelVersion = freezed,
+    Object? orientationCorrection = freezed,
     Object? labels = freezed,
+    Object? imageProperties = freezed,
   }) {
     return _then(_$LabelDetectionModelImpl(
       labelModelVersion: freezed == labelModelVersion
           ? _value.labelModelVersion
           : labelModelVersion // ignore: cast_nullable_to_non_nullable
               as String?,
+      orientationCorrection: freezed == orientationCorrection
+          ? _value.orientationCorrection
+          : orientationCorrection // ignore: cast_nullable_to_non_nullable
+              as String?,
       labels: freezed == labels
           ? _value._labels
           : labels // ignore: cast_nullable_to_non_nullable
               as List<LabelModel>?,
+      imageProperties: freezed == imageProperties
+          ? _value.imageProperties
+          : imageProperties // ignore: cast_nullable_to_non_nullable
+              as ImagePropertiesModel?,
     ));
   }
 }
@@ -124,7 +173,9 @@ class __$$LabelDetectionModelImplCopyWithImpl<$Res>
 class _$LabelDetectionModelImpl implements _LabelDetectionModel {
   _$LabelDetectionModelImpl(
       {@JsonKey(name: 'LabelModelVersion') this.labelModelVersion,
-      @JsonKey(name: 'Labels') final List<LabelModel>? labels})
+      @JsonKey(name: 'OrientationCorrection') this.orientationCorrection,
+      @JsonKey(name: 'Labels') final List<LabelModel>? labels,
+      @JsonKey(name: 'ImageProperties') this.imageProperties})
       : _labels = labels;
 
   factory _$LabelDetectionModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -133,6 +184,9 @@ class _$LabelDetectionModelImpl implements _LabelDetectionModel {
   @override
   @JsonKey(name: 'LabelModelVersion')
   final String? labelModelVersion;
+  @override
+  @JsonKey(name: 'OrientationCorrection')
+  final String? orientationCorrection;
   final List<LabelModel>? _labels;
   @override
   @JsonKey(name: 'Labels')
@@ -145,8 +199,12 @@ class _$LabelDetectionModelImpl implements _LabelDetectionModel {
   }
 
   @override
+  @JsonKey(name: 'ImageProperties')
+  final ImagePropertiesModel? imageProperties;
+
+  @override
   String toString() {
-    return 'LabelDetectionModel(labelModelVersion: $labelModelVersion, labels: $labels)';
+    return 'LabelDetectionModel(labelModelVersion: $labelModelVersion, orientationCorrection: $orientationCorrection, labels: $labels, imageProperties: $imageProperties)';
   }
 
   @override
@@ -156,13 +214,21 @@ class _$LabelDetectionModelImpl implements _LabelDetectionModel {
             other is _$LabelDetectionModelImpl &&
             (identical(other.labelModelVersion, labelModelVersion) ||
                 other.labelModelVersion == labelModelVersion) &&
-            const DeepCollectionEquality().equals(other._labels, _labels));
+            (identical(other.orientationCorrection, orientationCorrection) ||
+                other.orientationCorrection == orientationCorrection) &&
+            const DeepCollectionEquality().equals(other._labels, _labels) &&
+            (identical(other.imageProperties, imageProperties) ||
+                other.imageProperties == imageProperties));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, labelModelVersion,
-      const DeepCollectionEquality().hash(_labels));
+  int get hashCode => Object.hash(
+      runtimeType,
+      labelModelVersion,
+      orientationCorrection,
+      const DeepCollectionEquality().hash(_labels),
+      imageProperties);
 
   /// Create a copy of LabelDetectionModel
   /// with the given fields replaced by the non-null parameter values.
@@ -183,9 +249,12 @@ class _$LabelDetectionModelImpl implements _LabelDetectionModel {
 
 abstract class _LabelDetectionModel implements LabelDetectionModel {
   factory _LabelDetectionModel(
-          {@JsonKey(name: 'LabelModelVersion') final String? labelModelVersion,
-          @JsonKey(name: 'Labels') final List<LabelModel>? labels}) =
-      _$LabelDetectionModelImpl;
+      {@JsonKey(name: 'LabelModelVersion') final String? labelModelVersion,
+      @JsonKey(name: 'OrientationCorrection')
+      final String? orientationCorrection,
+      @JsonKey(name: 'Labels') final List<LabelModel>? labels,
+      @JsonKey(name: 'ImageProperties')
+      final ImagePropertiesModel? imageProperties}) = _$LabelDetectionModelImpl;
 
   factory _LabelDetectionModel.fromJson(Map<String, dynamic> json) =
       _$LabelDetectionModelImpl.fromJson;
@@ -194,8 +263,14 @@ abstract class _LabelDetectionModel implements LabelDetectionModel {
   @JsonKey(name: 'LabelModelVersion')
   String? get labelModelVersion;
   @override
+  @JsonKey(name: 'OrientationCorrection')
+  String? get orientationCorrection;
+  @override
   @JsonKey(name: 'Labels')
   List<LabelModel>? get labels;
+  @override
+  @JsonKey(name: 'ImageProperties')
+  ImagePropertiesModel? get imageProperties;
 
   /// Create a copy of LabelDetectionModel
   /// with the given fields replaced by the non-null parameter values.

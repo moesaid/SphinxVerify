@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sphinx_verify/sphinx_verify.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -34,10 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final int _counter = 0;
 
   Future<void> _incrementCounter() async {
-    const sphinxVerify = SphinxVerify(
+    var sphinxVerify = SphinxVerify(
       region: 'us-east-1',
-      accessKey: '',
-      secretKey: '',
+      accessKey: dotenv.env['ACCESS_KEY'] ?? '',
+      secretKey: dotenv.env['SECRET_KEY'] ?? '',
     );
 
     var res = await sphinxVerify.awsRekognition.moderateContent(
