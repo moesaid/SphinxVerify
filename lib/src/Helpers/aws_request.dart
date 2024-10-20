@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:sphinx_verify/src/Helpers/aws_signature.dart';
 
@@ -97,11 +96,15 @@ class AwsRequest {
 
       final res = builder.toString();
 
+      // status code
+      if (response.statusCode != 200) {
+        throw Exception('❌ AWS request failed: $res');
+      }
+
       // Parse JSON response
       return jsonDecode(res) as Map<String, dynamic>;
     } catch (e) {
-      debugPrint(e.toString());
-      throw Exception('AWS request failed: $e');
+      throw Exception('👉 oops! Something went wrong: $e');
     }
   }
 }
