@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sphinx_verify/src/Enums/attribute_enum.dart';
 import 'package:sphinx_verify/src/Enums/label_features_enum.dart';
+import 'package:sphinx_verify/src/Enums/quality_filter_enum.dart';
 import 'package:sphinx_verify/src/Enums/rekognition_service_enum.dart';
 import 'package:sphinx_verify/src/Helpers/aws_request.dart';
 import 'package:sphinx_verify/src/Models/face_detection_model.dart';
+import 'package:sphinx_verify/src/Models/face_matches_model.dart';
 import 'package:sphinx_verify/src/Models/label_detection_model.dart';
 import 'package:sphinx_verify/src/Models/moderate_content_model.dart';
 import 'package:sphinx_verify/src/Models/text_detection_model.dart';
@@ -221,6 +223,70 @@ class AwsRekognitionProvider {
       return data
           .map((e) => FaceDetectionModel.fromJson(e as Map<String, dynamic>))
           .toList();
+    }
+
+    return null;
+  }
+
+  /// compare faces
+  Future<FaceMatchesModel?> compareFaces({
+    QualityFilterEnum? qualityFilter,
+    String? sourceImageUrl,
+    String? targetImageUrl,
+    File? sourceImageFile,
+    File? targetImageFile,
+    double? similarityThreshold,
+  }) async {
+    final Uint8List sourceUint8List;
+    final Uint8List targetUint8List;
+
+    if (sourceImageFile != null) {
+      sourceUint8List = await sourceImageFile.readAsBytes();
+    } else if (sourceImageUrl != null) {
+      final imgRes = await http.get(Uri.parse(sourceImageUrl));
+      sourceUint8List = imgRes.bodyBytes;
+    } else {
+      throw Exception(
+        'Either sourceImageUrl or sourceImageFile must be provided',
+      );
+    }
+
+    if (targetImageFile != null) {
+      targetUint8List = await targetImageFile.readAsBytes();
+    } else if (targetImageUrl != null) {
+      final imgRes = await http.get(Uri.parse(targetImageUrl));
+      targetUint8List = imgRes.bodyBytes;
+    } else {
+      throw Exception(
+        'Either targetImageUrl or targetImageFile must be provided',
+      );
+    }
+
+    // Base64 encode the image bytes
+    final sourceImage = base64Encode(sourceUint8List);
+    final targetImage = base64Encode(targetUint8List);
+
+    // Build the payload
+    final payload = {
+      'SourceImage': {
+        'Bytes': sourceImage,
+      },
+      'TargetImage': {
+        'Bytes': targetImage,
+      },
+      if (similarityThreshold != null)
+        'SimilarityThreshold': similarityThreshold,
+      if (qualityFilter != null) 'QualityFilter': qualityFilter.value,
+    };
+
+    // Call the sendRequest with the target operation
+    final res = await _awsRequest.sendRequest(
+      target: RekognitionServiceEnum.compareFaces.value,
+      payload: payload,
+    );
+
+    if (res.containsKey('FaceMatches')) {
+      return FaceMatchesModel.fromJson(res);
     }
 
     return null;
