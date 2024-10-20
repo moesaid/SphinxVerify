@@ -65,6 +65,8 @@ class AwsRekognitionProvider {
     // Base64 encode the image bytes
     final baseImage = base64Encode(imageUint8List);
 
+    print('❌baseImage: $baseImage');
+
     // Build the payload
     final payload = {
       'Image': {
