@@ -8,6 +8,7 @@ import 'package:sphinx_verify/src/Enums/rekognition_service_enum.dart';
 import 'package:sphinx_verify/src/Helpers/aws_request.dart';
 import 'package:sphinx_verify/src/Models/label_detection_model.dart';
 import 'package:sphinx_verify/src/Models/moderate_content_model.dart';
+import 'package:sphinx_verify/src/Models/text_detection_model.dart';
 
 /// AWS Rekognition Provider
 class AwsRekognitionProvider {
@@ -127,6 +128,50 @@ class AwsRekognitionProvider {
     // Parse the response
     if (res.containsKey('ModerationLabels')) {
       return ModerateContentModel.fromJson(res);
+    }
+
+    return null;
+  }
+
+  /// detect text in image
+  Future<List<TextDetectionModel>?> detectText({
+    String? imageUrl,
+    File? file,
+  }) async {
+    // Read the image bytes
+    final Uint8List imageUint8List;
+
+    if (file != null) {
+      imageUint8List = await file.readAsBytes();
+    } else if (imageUrl != null) {
+      final imgRes = await http.get(Uri.parse(imageUrl));
+      imageUint8List = imgRes.bodyBytes;
+    } else {
+      throw Exception('Either imageUrl or file must be provided');
+    }
+
+    // Base64 encode the image bytes
+    final baseImage = base64Encode(imageUint8List);
+
+    // Build the payload
+    final payload = {
+      'Image': {
+        'Bytes': baseImage,
+      },
+    };
+
+    // Call the sendRequest with the target operation
+    final res = await _awsRequest.sendRequest(
+      target: RekognitionServiceEnum.detectText.value,
+      payload: payload,
+    );
+
+    if (res.containsKey('TextDetections')) {
+      final data = res['TextDetections'] as List<dynamic>;
+
+      return data
+          .map((e) => TextDetectionModel.fromJson(e as Map<String, dynamic>))
+          .toList();
     }
 
     return null;

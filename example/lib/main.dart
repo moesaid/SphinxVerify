@@ -42,12 +42,15 @@ class _MyHomePageState extends State<MyHomePage> {
       secretKey: dotenv.env['SECRET_KEY'] ?? '',
     );
 
-    final LabelDetectionModel? res = await sphinxVerify.awsSDK.detectLabels(
+    final List<TextDetectionModel>? res = await sphinxVerify.awsSDK.detectText(
       imageUrl:
-          'https://imageio.forbes.com/specials-images/imageserve/5f469ea85cc82fc8d6083f05/Amazon-Founder-and-CEO-Jeff-Bezos/960x0.jpg',
+          'https://static.wixstatic.com/media/80832f_2b806497f7444ee5b02828bfed395a27~mv2.jpg/v1/fill/w_568,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/80832f_2b806497f7444ee5b02828bfed395a27~mv2.jpg',
     );
 
-    print({'🚀': res?.toJson()});
+    print({
+      '✅ length': res?.length,
+      '🚀 data': res?.first.toJson(),
+    });
   }
 
   @override
