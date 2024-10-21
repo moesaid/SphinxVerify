@@ -22,7 +22,6 @@ class BuildModerateContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(label?.toJson());
     return Stack(
       children: [
         // Image rendering

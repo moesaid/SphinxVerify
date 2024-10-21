@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cr_json_widget/cr_json_widget.dart';
 import 'package:example/Views/Global/build_action_widget.dart';
+import 'package:example/Views/Global/build_face_compare_widget.dart';
 import 'package:example/Views/Global/build_face_detection_widget.dart';
 import 'package:example/Views/Global/build_label_detection_widget.dart';
 import 'package:example/Views/Global/build_moderate_content_widget.dart';
@@ -22,9 +23,13 @@ class DetectPage extends StatefulWidget {
 class _DetectLabelPageState extends State<DetectPage> {
   File? _imageFile;
   String? _imageUrl;
+  File? _targetImageFile;
+  String? _targetImageUrl;
   bool _isLoading = false;
   DropdownOptionsEnum? _selectedDropdownOption;
   final TextEditingController _imageUrlController = TextEditingController();
+  final TextEditingController _targetImageUrlController =
+      TextEditingController();
 
   LabelDetectionModel? _labelDetectionResult;
   ModerateContentModel? _moderateContentResult;
@@ -62,13 +67,21 @@ class _DetectLabelPageState extends State<DetectPage> {
   }
 
   // select image from gallery
-  void _selectImageFromGallery() async {
+  void _selectImageFromGallery({bool isTargetImage = false}) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     // xfile to file
-    _imageFile = image != null ? File(image.path) : null;
-    _imageUrl = null;
+    if (isTargetImage) {
+      _targetImageFile = image != null ? File(image.path) : null;
+      _targetImageUrl = null;
+      _targetImageUrlController.clear();
+    } else {
+      _imageFile = image != null ? File(image.path) : null;
+      _imageUrl = null;
+      _imageUrlController.clear();
+    }
+
     _imageUrlController.clear();
     _clearResults();
 
@@ -76,14 +89,20 @@ class _DetectLabelPageState extends State<DetectPage> {
   }
 
   // image url
-  void _imageUrlHandler(String value) {
+  void _imageUrlHandler(String value, {bool isTargetImage = false}) {
     // must be a valid url
     if (!Uri.parse(value).isAbsolute) {
       return;
     }
 
-    _imageUrl = value;
-    _imageFile = null;
+    if (isTargetImage) {
+      _targetImageUrl = value;
+      _targetImageFile = null;
+    } else {
+      _imageUrl = value;
+      _imageFile = null;
+    }
+
     _clearResults();
 
     setState(() {});
@@ -101,8 +120,6 @@ class _DetectLabelPageState extends State<DetectPage> {
       file: _imageFile,
       imageUrl: _imageUrl,
     );
-
-    print(res?.labels?.length);
 
     setState(() {
       _labelDetectionResult = res;
@@ -160,6 +177,8 @@ class _DetectLabelPageState extends State<DetectPage> {
     FaceMatchesModel? res = await widget.sphinxVerify.awsSDK.compareFaces(
       sourceImageFile: _imageFile,
       targetImageFile: _imageFile,
+      sourceImageUrl: _imageUrl,
+      targetImageUrl: _imageUrl,
     );
 
     setState(() {
@@ -278,7 +297,32 @@ class _DetectLabelPageState extends State<DetectPage> {
                     isLoading: _isLoading,
                     label: _moderateContentResult,
                   ),
-                  compareFaces: const Text('Compare Faces'),
+                  compareFaces: Stack(
+                    children: [
+                      BuildFaceMatchWidget(
+                        constraints: constraints,
+                        imageFile: _imageFile,
+                        imageUrl: _imageUrl,
+                        isLoading: _isLoading,
+                        faceMatchesResult: _faceMatchesResult,
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: BuildFaceMatchWidget(
+                          constraints: const BoxConstraints(
+                            maxHeight: 100,
+                            maxWidth: 100,
+                          ),
+                          imageFile: _targetImageFile,
+                          imageUrl: _targetImageUrl,
+                          isLoading: _isLoading,
+                          faceMatchesResult: _faceMatchesResult,
+                          hideBoundingBox: true,
+                        ),
+                      ),
+                    ],
+                  ),
                   option: _selectedDropdownOption!,
                 ),
               ),

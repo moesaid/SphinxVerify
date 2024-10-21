@@ -10,13 +10,15 @@ class BuildActionWidget extends StatelessWidget {
     this.updateDropdownSelection,
     this.selectedDropdownOption,
     this.onPressed,
+    this.targetImageUrlController,
   });
 
-  final Function(String)? imageUrlHandler;
+  final Function(String value, {bool isTargetImage})? imageUrlHandler;
   final Function(DropdownOptionsEnum)? updateDropdownSelection;
-  final void Function()? selectImageFromGallery;
+  final void Function({bool isTargetImage})? selectImageFromGallery;
   final void Function()? onPressed;
   final TextEditingController? imageUrlController;
+  final TextEditingController? targetImageUrlController;
   final DropdownOptionsEnum? selectedDropdownOption;
 
   @override
@@ -43,12 +45,35 @@ class BuildActionWidget extends StatelessWidget {
                     labelText: 'Enter image URL',
                   ),
                 ),
+                if (selectedDropdownOption == DropdownOptionsEnum.compareFaces)
+                  TextFormField(
+                    controller: targetImageUrlController,
+                    onChanged: (val) => imageUrlHandler?.call(
+                      val,
+                      isTargetImage: true,
+                    ),
+                    decoration: const InputDecoration(
+                      labelText: 'Enter target image URL',
+                    ),
+                  ),
                 const SizedBox(height: 16),
                 const Text('OR', style: TextStyle(fontSize: 20)),
                 const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: selectImageFromGallery,
-                  child: const Text('Select image from gallery'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FilledButton(
+                      onPressed: selectImageFromGallery,
+                      child: const Text('pick image'),
+                    ),
+                    if (selectedDropdownOption ==
+                        DropdownOptionsEnum.compareFaces)
+                      FilledButton(
+                        onPressed: () =>
+                            selectImageFromGallery?.call(isTargetImage: true),
+                        child: const Text('pick target image'),
+                      ),
+                  ],
                 ),
               ],
             ),
