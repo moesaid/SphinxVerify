@@ -176,9 +176,10 @@ class _DetectLabelPageState extends State<DetectPage> {
 
     FaceMatchesModel? res = await widget.sphinxVerify.awsSDK.compareFaces(
       sourceImageFile: _imageFile,
-      targetImageFile: _imageFile,
       sourceImageUrl: _imageUrl,
-      targetImageUrl: _imageUrl,
+      targetImageFile: _targetImageFile,
+      targetImageUrl: _targetImageUrl,
+      similarityThreshold: 90,
     );
 
     setState(() {
@@ -301,8 +302,8 @@ class _DetectLabelPageState extends State<DetectPage> {
                     children: [
                       BuildFaceMatchWidget(
                         constraints: constraints,
-                        imageFile: _imageFile,
-                        imageUrl: _imageUrl,
+                        imageFile: _targetImageFile,
+                        imageUrl: _targetImageUrl,
                         isLoading: _isLoading,
                         faceMatchesResult: _faceMatchesResult,
                       ),
@@ -314,8 +315,8 @@ class _DetectLabelPageState extends State<DetectPage> {
                             maxHeight: 100,
                             maxWidth: 100,
                           ),
-                          imageFile: _targetImageFile,
-                          imageUrl: _targetImageUrl,
+                          imageFile: _imageFile,
+                          imageUrl: _imageUrl,
                           isLoading: _isLoading,
                           faceMatchesResult: _faceMatchesResult,
                           hideBoundingBox: true,

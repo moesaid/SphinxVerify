@@ -89,7 +89,9 @@ class FaceBoundingBoxPainter extends CustomPainter {
     for (final matchedFace in faceMatchesResult.matchedFaces!) {
       final boundingBox = matchedFace.face?.boundingBox;
 
-      if (boundingBox != null) {
+      print('matched Face : ${matchedFace.toJson()}');
+
+      if (boundingBox != null && matchedFace.similarity! > 90) {
         final double top = boundingBox.top! * size.height;
         final double left = boundingBox.left! * size.width;
         final double width = boundingBox.width! * size.width;
