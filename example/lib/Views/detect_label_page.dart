@@ -4,6 +4,7 @@ import 'package:cr_json_widget/cr_json_widget.dart';
 import 'package:example/Views/Global/build_action_widget.dart';
 import 'package:example/Views/Global/build_face_detection_widget.dart';
 import 'package:example/Views/Global/build_label_detection_widget.dart';
+import 'package:example/Views/Global/build_moderate_content_widget.dart';
 import 'package:example/Views/Global/build_text_detection_widget.dart';
 import 'package:example/enums/dropdown_options_enum.dart';
 import 'package:flutter/material.dart';
@@ -179,6 +180,7 @@ class _DetectLabelPageState extends State<DetectPage> {
         await widget.sphinxVerify.awsSDK.moderateContent(
       file: _imageFile,
       imageUrl: _imageUrl,
+      minConfidence: 5,
     );
 
     setState(() {
@@ -269,7 +271,13 @@ class _DetectLabelPageState extends State<DetectPage> {
                     isLoading: _isLoading,
                     labels: _faceDetectionResult,
                   ),
-                  moderateContent: const Text('Moderate Content'),
+                  moderateContent: BuildModerateContentWidget(
+                    constraints: constraints,
+                    imageFile: _imageFile,
+                    imageUrl: _imageUrl,
+                    isLoading: _isLoading,
+                    label: _moderateContentResult,
+                  ),
                   compareFaces: const Text('Compare Faces'),
                   option: _selectedDropdownOption!,
                 ),
