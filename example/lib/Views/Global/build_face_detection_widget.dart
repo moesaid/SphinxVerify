@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sphinx_verify/sphinx_verify.dart';
 
-class BuildTextDetectionWidget extends StatelessWidget {
-  const BuildTextDetectionWidget({
+class BuildFaceDetectionWidget extends StatelessWidget {
+  const BuildFaceDetectionWidget({
     super.key,
     required File? imageFile,
     required String? imageUrl,
@@ -16,14 +16,14 @@ class BuildTextDetectionWidget extends StatelessWidget {
 
   final File? _imageFile;
   final String? _imageUrl;
-  final List<TextDetectionModel>? labels;
+  final List<FaceDetectionModel>? labels;
   final bool? isLoading;
   final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
-    final List<TextDetectionModel> filteredLabels =
-        labels?.where((e) => e.geometry?.boundingBox != null).toList() ?? [];
+    final List<FaceDetectionModel> filteredLabels =
+        labels?.where((e) => e.boundingBox != null).toList() ?? [];
 
     return Stack(
       children: [
@@ -72,21 +72,20 @@ class BuildTextDetectionWidget extends StatelessWidget {
 }
 
 class TextBoundingBoxPainter extends CustomPainter {
-  final List<TextDetectionModel> labels;
+  final List<FaceDetectionModel> labels;
 
   TextBoundingBoxPainter(this.labels);
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.red
+      ..color = Colors.yellow
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
     // For each detected text, draw the bounding box using width and height
     for (final label in labels) {
-      final geometry = label.geometry;
-      final boundingBox = geometry?.boundingBox;
+      final boundingBox = label.boundingBox;
 
       if (boundingBox != null) {
         // Scale bounding box values based on the actual image size

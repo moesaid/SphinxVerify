@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cr_json_widget/cr_json_widget.dart';
 import 'package:example/Views/Global/build_action_widget.dart';
+import 'package:example/Views/Global/build_face_detection_widget.dart';
 import 'package:example/Views/Global/build_label_detection_widget.dart';
 import 'package:example/Views/Global/build_text_detection_widget.dart';
 import 'package:example/enums/dropdown_options_enum.dart';
@@ -261,7 +262,13 @@ class _DetectLabelPageState extends State<DetectPage> {
                     isLoading: _isLoading,
                     labels: _textDetectionResult,
                   ),
-                  detectFaces: const Text('Detect Faces'),
+                  detectFaces: BuildFaceDetectionWidget(
+                    constraints: constraints,
+                    imageFile: _imageFile,
+                    imageUrl: _imageUrl,
+                    isLoading: _isLoading,
+                    labels: _faceDetectionResult,
+                  ),
                   moderateContent: const Text('Moderate Content'),
                   compareFaces: const Text('Compare Faces'),
                   option: _selectedDropdownOption!,
