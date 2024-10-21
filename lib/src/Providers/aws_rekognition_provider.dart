@@ -65,7 +65,13 @@ class AwsRekognitionProvider {
     // Base64 encode the image bytes
     final baseImage = base64Encode(imageUint8List);
 
-    print('❌baseImage: $baseImage');
+    // constraint: Member must have length less than or equal to 5242880"
+    if (baseImage.length > 5242880) {
+      throw PlatformException(
+        code: 'ImageSizeExceeded',
+        message: 'Image size exceeded the limit of 5MB',
+      );
+    }
 
     // Build the payload
     final payload = {
