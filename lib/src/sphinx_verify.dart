@@ -32,7 +32,7 @@ class SphinxVerify {
 
   /// export SphinxKycWidget
   Widget get kycWidget => SphinxKycWidget(
-        // region: region,
+        region: region,
         accessKey: accessKey,
         secretKey: secretKey,
       );
