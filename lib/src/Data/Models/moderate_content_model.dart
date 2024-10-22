@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sphinx_verify/src/Models/content_type_model.dart';
-import 'package:sphinx_verify/src/Models/moderation_label_model.dart';
+import 'package:sphinx_verify/src/Data/Models/content_type_model.dart';
+import 'package:sphinx_verify/src/Data/Models/moderation_label_model.dart';
 
 part 'freezed/moderate_content_model.freezed.dart';
 part 'freezed/moderate_content_model.g.dart';

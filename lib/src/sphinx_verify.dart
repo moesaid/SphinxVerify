@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:sphinx_verify/src/Data/Providers/aws_rekognition_provider.dart';
 import 'package:sphinx_verify/src/Enums/aws_region_enum.dart';
-import 'package:sphinx_verify/src/Providers/aws_rekognition_provider.dart';
+import 'package:sphinx_verify/src/Views/sphinx_kyc_widget.dart';
 
 /// {@template sphinx_verify}
 /// A Very Good Project created by Very Good CLI.
@@ -24,6 +26,13 @@ class SphinxVerify {
   /// aws rekognition provider
   AwsRekognitionProvider get awsSDK => AwsRekognitionProvider(
         region: region.code,
+        accessKey: accessKey,
+        secretKey: secretKey,
+      );
+
+  /// export SphinxKycWidget
+  Widget get kycWidget => SphinxKycWidget(
+        // region: region,
         accessKey: accessKey,
         secretKey: secretKey,
       );

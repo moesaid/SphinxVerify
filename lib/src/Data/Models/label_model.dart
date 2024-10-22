@@ -2,10 +2,10 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sphinx_verify/src/Models/alias_model.dart';
-import 'package:sphinx_verify/src/Models/category_model.dart';
-import 'package:sphinx_verify/src/Models/instance_model.dart';
-import 'package:sphinx_verify/src/Models/parent_model.dart';
+import 'package:sphinx_verify/src/Data/Models/alias_model.dart';
+import 'package:sphinx_verify/src/Data/Models/category_model.dart';
+import 'package:sphinx_verify/src/Data/Models/instance_model.dart';
+import 'package:sphinx_verify/src/Data/Models/parent_model.dart';
 
 part 'freezed/label_model.freezed.dart';
 part 'freezed/label_model.g.dart';

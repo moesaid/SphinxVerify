@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sphinx_verify/src/Models/geometry_model.dart';
+import 'package:sphinx_verify/src/Data/Models/geometry_model.dart';
 
 part 'freezed/text_detection_model.freezed.dart';
 part 'freezed/text_detection_model.g.dart';

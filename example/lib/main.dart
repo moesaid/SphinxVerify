@@ -1,4 +1,4 @@
-import 'package:example/Views/detect_label_page.dart';
+import 'package:example/Views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sphinx_verify/sphinx_verify.dart';
@@ -29,9 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: DetectPage(
-        sphinxVerify: sphinxVerify,
-      ),
+      home: HomePage(sphinxVerify: sphinxVerify),
     );
   }
 }

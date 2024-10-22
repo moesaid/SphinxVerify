@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sphinx_verify/src/Models/dominant_color_model.dart';
-import 'package:sphinx_verify/src/Models/quality_model.dart';
+import 'package:sphinx_verify/src/Data/Models/dominant_color_model.dart';
+import 'package:sphinx_verify/src/Data/Models/quality_model.dart';
 
 part 'freezed/background_model.freezed.dart';
 part 'freezed/background_model.g.dart';

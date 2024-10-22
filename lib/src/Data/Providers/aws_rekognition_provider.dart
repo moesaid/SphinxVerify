@@ -3,16 +3,16 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:sphinx_verify/src/Data/Models/face_detection_model.dart';
+import 'package:sphinx_verify/src/Data/Models/face_matches_model.dart';
+import 'package:sphinx_verify/src/Data/Models/label_detection_model.dart';
+import 'package:sphinx_verify/src/Data/Models/moderate_content_model.dart';
+import 'package:sphinx_verify/src/Data/Models/text_detection_model.dart';
 import 'package:sphinx_verify/src/Enums/attribute_enum.dart';
 import 'package:sphinx_verify/src/Enums/label_features_enum.dart';
 import 'package:sphinx_verify/src/Enums/quality_filter_enum.dart';
 import 'package:sphinx_verify/src/Enums/rekognition_service_enum.dart';
 import 'package:sphinx_verify/src/Helpers/aws_request.dart';
-import 'package:sphinx_verify/src/Models/face_detection_model.dart';
-import 'package:sphinx_verify/src/Models/face_matches_model.dart';
-import 'package:sphinx_verify/src/Models/label_detection_model.dart';
-import 'package:sphinx_verify/src/Models/moderate_content_model.dart';
-import 'package:sphinx_verify/src/Models/text_detection_model.dart';
 
 /// AWS Rekognition Provider
 class AwsRekognitionProvider {

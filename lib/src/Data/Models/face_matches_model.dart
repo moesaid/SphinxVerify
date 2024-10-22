@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sphinx_verify/src/Models/face_model.dart';
-import 'package:sphinx_verify/src/Models/matched_faces_model.dart';
-import 'package:sphinx_verify/src/Models/source_image_face_model.dart';
+import 'package:sphinx_verify/src/Data/Models/face_model.dart';
+import 'package:sphinx_verify/src/Data/Models/matched_faces_model.dart';
+import 'package:sphinx_verify/src/Data/Models/source_image_face_model.dart';
 
 part 'freezed/face_matches_model.freezed.dart';
 part 'freezed/face_matches_model.g.dart';
