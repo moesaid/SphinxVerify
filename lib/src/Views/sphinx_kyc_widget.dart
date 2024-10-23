@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:sphinx_verify/sphinx_enums.dart';
+import 'package:sphinx_verify/sphinx_verify.dart';
 import 'package:sphinx_verify/src/Data/Services/kyc_services.dart';
 import 'package:sphinx_verify/src/Views/widgets/build_missing_prams_widget.dart';
 
@@ -11,6 +13,7 @@ class SphinxKycWidget extends StatefulWidget {
     this.region,
     this.accessKey,
     this.secretKey,
+    this.onVerificationComplete,
   });
 
   /// aws region
@@ -21,6 +24,9 @@ class SphinxKycWidget extends StatefulWidget {
 
   /// secret key
   final String? secretKey;
+
+  /// callback function
+  final void Function(FaceMatchesModel)? onVerificationComplete;
 
   @override
   State<SphinxKycWidget> createState() => _SphinxKycWidgetState();
@@ -114,12 +120,35 @@ class _SphinxKycWidgetState extends State<SphinxKycWidget> {
                   ),
                   const Spacer(),
                   FilledButton(
-                    onPressed: () {
-                      KycServices(
+                    onPressed: () async {
+                      final kyc = KycServices(
                         region: widget.region!,
                         accessKey: widget.accessKey!,
                         secretKey: widget.secretKey!,
-                      ).startKyc();
+                      );
+
+                      File? idCard;
+                      File? selfie;
+                      FaceMatchesModel? result;
+
+                      // handle id card
+                      idCard = await _handelIdCard(context, kyc);
+
+                      // handle selfie
+                      selfie = await _handelSelfie(context, kyc);
+
+                      result = await _handleVerification(
+                        context,
+                        kyc,
+                        idCard,
+                        selfie,
+                      );
+
+                      // handle before complete
+                      await _handelBeforeComplete(context);
+
+                      // call callback function
+                      widget.onVerificationComplete?.call(result!);
                     },
                     child: Text('start verification'.toUpperCase()),
                   ),
@@ -199,4 +228,196 @@ class BuildWhyDoWeNeedThisInformationSheet extends StatelessWidget {
       ),
     );
   }
+}
+
+/// show status dialog
+Future<void> _showStatusDialog(
+  BuildContext context,
+  String? message, {
+  Widget? loading,
+}) async {
+  return showAdaptiveDialog(
+    context: context,
+    builder: (_) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              loading ?? const CircularProgressIndicator(),
+              if (message != null) const SizedBox(height: 20),
+              if (message != null) Text(message),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+/// handle id card
+Future<File?> _handelIdCard(BuildContext context, KycServices kyc) async {
+  // file
+  File? idCard;
+
+  try {
+    // show dialog
+    // ignore: unawaited_futures
+    _showStatusDialog(
+      context,
+      'Verifying your driving license...',
+    );
+
+    idCard = await kyc.checkDrivingLicense();
+
+    // close dialog
+    Navigator.of(context).pop();
+  } catch (e) {
+    // close dialog
+    Navigator.of(context).pop();
+
+    // show error dialog
+    return showAdaptiveDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog.adaptive(
+          title: const Text('Error'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  return idCard;
+}
+
+/// handle selfie
+Future<File?> _handelSelfie(BuildContext context, KycServices kyc) async {
+  // file
+  File? selfie;
+
+  try {
+    // show dialog
+    // ignore: unawaited_futures
+    _showStatusDialog(
+      context,
+      'smiling for the camera...',
+    );
+
+    // wait for 2 seconds
+    await Future<void>.delayed(const Duration(seconds: 1));
+
+    selfie = await kyc.checkSelfie();
+
+    // close dialog
+    Navigator.of(context).pop();
+  } catch (e) {
+    // close dialog
+    Navigator.of(context).pop();
+
+    // show error dialog
+    return showAdaptiveDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog.adaptive(
+          title: const Text('Error'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  return selfie;
+}
+
+/// handle verification
+Future<FaceMatchesModel?> _handleVerification(
+  BuildContext context,
+  KycServices kyc,
+  File? idCard,
+  File? selfie,
+) async {
+  FaceMatchesModel? result;
+
+  // show dialog
+  // ignore: unawaited_futures
+  _showStatusDialog(
+    context,
+    'Verifying your identity...',
+  );
+
+  // wait for 1 seconds
+  await Future<void>.delayed(const Duration(seconds: 1));
+
+  try {
+    // compare id card and selfie
+    result = await kyc.compareIdToSelfie(
+      sourceImageFile: selfie!,
+      targetImageFile: idCard!,
+      similarityThreshold: 90,
+    );
+
+    // close dialog
+    Navigator.of(context).pop();
+  } catch (e) {
+    // close dialog
+    Navigator.of(context).pop();
+
+    // show error dialog
+    return showAdaptiveDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog.adaptive(
+          title: const Text('Error'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  return result;
+}
+
+/// handle before complete
+Future<void> _handelBeforeComplete(BuildContext context) async {
+  // show dialog
+  // ignore: unawaited_futures
+  _showStatusDialog(
+    context,
+    'Verification complete',
+    loading: const Icon(
+      Icons.check_circle,
+      color: Colors.green,
+      size: 50,
+    ),
+  );
+  // wait for 1 seconds
+  await Future<void>.delayed(const Duration(seconds: 1));
+
+  Navigator.of(context).pop();
 }

@@ -67,9 +67,12 @@ class _DetectLabelPageState extends State<DetectPage> {
   }
 
   // select image from gallery
-  void _selectImageFromGallery({bool isTargetImage = false}) async {
+  void _selectImageFromGallery(
+      {bool isTargetImage = false, ImageSource? source}) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(
+      source: source ?? ImageSource.gallery,
+    );
 
     // xfile to file
     if (isTargetImage) {

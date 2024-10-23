@@ -11,6 +11,12 @@ Future<void> main() async {
     region: AwsRegionEnum.usEast1,
     accessKey: dotenv.env['ACCESS_KEY'] ?? '',
     secretKey: dotenv.env['SECRET_KEY'] ?? '',
+    onVerificationComplete: (FaceMatchesModel faceMatchesModel) {
+      print({
+        '❌similarity': faceMatchesModel.matchedFaces?.first.similarity,
+        'faceMatchesModel': faceMatchesModel,
+      });
+    },
   );
 
   runApp(MyApp(sphinxVerify: sphinxVerify));

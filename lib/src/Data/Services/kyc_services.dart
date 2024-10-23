@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sphinx_verify/sphinx_verify.dart';
 import 'package:sphinx_verify/src/Data/Providers/aws_rekognition_provider.dart';
@@ -24,20 +25,15 @@ class KycServices {
   late AwsRekognitionProvider _aws;
 
   /// start kyc
-  Future<FaceMatchesModel?> startKyc() async {
-    // 1- pick id card
-    // 2- pick selfie
-    // 3- send to aws rekognition ( face match )
-
+  Future<File?> checkDrivingLicense() async {
     // pick id card
     final idCard = await _pickImageProvider.pickImage(
-      source: ImageSource.gallery,
+      source: ImageSource.camera,
       preferredCameraDevice: CameraDevice.rear,
     );
 
     // if id card is null
     if (idCard == null) {
-      debugPrint('idCard is null');
       throw Exception('❌ idCard is null');
     }
 
@@ -51,7 +47,6 @@ class KycServices {
 
       // if label detection is null
       if (labelDetection == null) {
-        debugPrint('labelDetection is null');
         throw Exception('❌ labelDetection is null');
       }
 
@@ -62,13 +57,17 @@ class KycServices {
 
       // if not a driver license return
       if (isDriverLicense == false) {
-        debugPrint('not a driver license');
         throw Exception('❌ not a driver license');
       }
     } catch (e) {
       throw Exception('❌ error detecting driver license $e');
     }
 
+    return File(idCard.path);
+  }
+
+  /// check selfie
+  Future<File?> checkSelfie() async {
     // pick selfie
     final selfie = await _pickImageProvider.pickImage(
       source: ImageSource.camera,
@@ -80,36 +79,48 @@ class KycServices {
       throw Exception('❌ selfie is null');
     }
 
-    // detect if there is a face in the selfie
+    // check if its a face
     try {
       final faceDetection = await _aws.detectFaces(
         file: File(selfie.path),
-        attributes: [AttributeEnum.all],
       );
 
+      // if face detection is null
       if (faceDetection == null) {
         throw Exception('❌ faceDetection is null');
       }
 
-      if (faceDetection.isEmpty == true) {
-        debugPrint('no face detected in selfie');
-        throw Exception('❌ no face detected in selfie');
+      // check if its a face
+      final isFace = faceDetection.isNotEmpty;
+
+      // if not a face return
+      if (isFace == false) {
+        throw Exception('❌ not a face');
       }
     } catch (e) {
-      throw Exception('error detecting face in selfie $e');
+      throw Exception('❌ error detecting face $e');
     }
 
-    // send to aws rekognition ( face match )
-    final faceMatch = await _aws.compareFaces(
-      sourceImageFile: File(selfie.path),
-      targetImageFile: File(idCard.path),
-    );
+    return File(selfie.path);
+  }
 
-    if (faceMatch == null) {
-      throw Exception('❌ faceMatch is null');
+  /// compare id to selfie
+  Future<FaceMatchesModel?> compareIdToSelfie({
+    required File sourceImageFile,
+    required File targetImageFile,
+    required int similarityThreshold,
+  }) async {
+    FaceMatchesModel? result;
+    try {
+      result = await _aws.compareFaces(
+        sourceImageFile: sourceImageFile,
+        targetImageFile: targetImageFile,
+        similarityThreshold: similarityThreshold.toDouble(),
+      );
+    } catch (e) {
+      throw Exception('❌ error comparing id to selfie $e');
     }
 
-    // show result
-    return faceMatch;
+    return result;
   }
 }
