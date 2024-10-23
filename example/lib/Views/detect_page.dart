@@ -229,21 +229,22 @@ class _DetectLabelPageState extends State<DetectPage> {
                       child: CrJsonWidget(
                         jsonController: _jsonController,
                         json: DropdownOptionsEnum.whenForJson(
-                          option: _selectedDropdownOption!,
-                          detectLabels: _labelDetectionResult?.toJson(),
-                          moderateContent: _moderateContentResult?.toJson(),
-                          compareFaces: _faceMatchesResult?.toJson(),
-                          detectFaces: {
-                            'faces': _faceDetectionResult
-                                ?.map((e) => e.toJson())
-                                .toList()
-                          },
-                          detectText: {
-                            'text': _textDetectionResult
-                                ?.map((e) => e.toJson())
-                                .toList()
-                          },
-                        ),
+                              option: _selectedDropdownOption!,
+                              detectLabels: _labelDetectionResult?.toJson(),
+                              moderateContent: _moderateContentResult?.toJson(),
+                              compareFaces: _faceMatchesResult?.toJson(),
+                              detectFaces: {
+                                'faces': _faceDetectionResult
+                                    ?.map((e) => e.toJson())
+                                    .toList()
+                              },
+                              detectText: {
+                                'text': _textDetectionResult
+                                    ?.map((e) => e.toJson())
+                                    .toList()
+                              },
+                            ) ??
+                            {'Opps': 'No data found yet!'},
                       ),
                     ),
                   );

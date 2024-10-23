@@ -30,7 +30,7 @@ class BuildModerateContentWidget extends StatelessWidget {
           height: constraints.maxHeight,
           color: Colors.black,
           child: FittedBox(
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
             child: _imageFile != null
                 ? Image.file(
                     _imageFile,
