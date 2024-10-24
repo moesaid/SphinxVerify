@@ -43,4 +43,3 @@ app.*.map.json
 # Test related
 coverage
 example/.env
-example/ios/Runner.xcodeproj/project.pbxproj
