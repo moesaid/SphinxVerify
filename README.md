@@ -1,10 +1,23 @@
 # Sphinx Verify
 
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
-[![License: MIT][license_badge]][license_link]
+[![pub package][pub_badge]][pub_badge_link]
+[![License: MIT][license_badge]][license_badge_link]
 
-A Very Good Project created by Very Good CLI.
+Sphinx Verify is a Flutter package that amis to provider a SDK layer to amazon recognition service. with built-in use cases.
+
+---
+
+## Features 🚀
+
+- ✅ Text Detection
+- ✅ Face Detection
+- ✅ Label Detection
+- ✅ content Moderation
+- ✅ compare Faces
+
+## use cases
+
+- ✅ ( KYC flow ) Verify a user by comparing a selfie with a document photo ( driving license )
 
 ## Installation 💻
 
@@ -13,56 +26,84 @@ A Very Good Project created by Very Good CLI.
 Install via `flutter pub add`:
 
 ```sh
-dart pub add sphinx_verify
+flutter pub add sphinx_verify
 ```
 
 ---
 
-## Continuous Integration 🤖
+## Usage 📖
 
-Sphinx Verify comes with a built-in [GitHub Actions workflow][github_actions_link] powered by [Very Good Workflows][very_good_workflows_link] but you can also add your preferred CI/CD solution.
+```dart
+import 'package:sphinx_verify/sphinx_verify.dart';
 
-Out of the box, on each pull request and push, the CI `formats`, `lints`, and `tests` the code. This ensures the code remains consistent and behaves correctly as you add functionality or make changes. The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis options used by our team. Code coverage is enforced using the [Very Good Workflows][very_good_coverage_link].
+/// initialize the sphinx verify
+SphinxVerify sphinxVerify = SphinxVerify(
+    region: AwsRegionEnum.usEast1,
+    accessKey: dotenv.env['ACCESS_KEY'] ?? '',
+    secretKey: dotenv.env['SECRET_KEY'] ?? '',
+    onVerificationComplete: (FaceMatchesModel faceMatchesModel) {
+        print({
+        '❌similarity': faceMatchesModel.matchedFaces?.first.similarity,
+        'faceMatchesModel': faceMatchesModel,
+        });
+    },
+);
 
----
+/// exposed methods
 
-## Running Tests 🧪
+// detect labels
+LabelDetectionModel? res = await widget.sphinxVerify.awsSDK.detectLabels(
+    file: _imageFile,
+    imageUrl: _imageUrl,
+);
 
-For first time users, install the [very_good_cli][very_good_cli_link]:
+// detect text
+List<TextDetectionModel>? res = await widget.sphinxVerify.awsSDK.detectText(
+    file: _imageFile,
+    imageUrl: _imageUrl,
+);
 
-```sh
-dart pub global activate very_good_cli
+// detect faces
+List<FaceDetectionModel>? res = await widget.sphinxVerify.awsSDK.detectFaces(
+    file: _imageFile,
+    imageUrl: _imageUrl,
+);
+
+// compare faces
+FaceMatchesModel? res = await widget.sphinxVerify.awsSDK.compareFaces(
+    sourceImageFile: _imageFile,
+    sourceImageUrl: _imageUrl,
+    targetImageFile: _targetImageFile,
+    targetImageUrl: _targetImageUrl,
+    similarityThreshold: 90,
+);
+
+// moderate content
+ModerateContentModel? res = await widget.sphinxVerify.awsSDK.moderateContent(
+    file: _imageFile,
+    imageUrl: _imageUrl,
+    minConfidence: 5,
+);
 ```
 
-To run all unit tests:
+## KYC flow
 
-```sh
-very_good test --coverage
+```dart
+import 'package:flutter/material.dart';
+import 'package:sphinx_verify/sphinx_verify.dart';
+
+class KycPage extends StatelessWidget {
+  const KycPage({super.key, required this.sphinxVerify});
+  final SphinxVerify sphinxVerify;
+
+  @override
+  Widget build(BuildContext context) {
+    return sphinxVerify.kycWidget;
+  }
+}
 ```
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
-
-```sh
-# Generate Coverage Report
-genhtml coverage/lcov.info -o coverage/
-
-# Open Coverage Report
-open coverage/index.html
-```
-
-[flutter_install_link]: https://docs.flutter.dev/get-started/install
-[github_actions_link]: https://docs.github.com/en/actions/learn-github-actions
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
-[logo_black]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_black.png#gh-light-mode-only
-[logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
-[mason_link]: https://github.com/felangel/mason
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
-[very_good_cli_link]: https://pub.dev/packages/very_good_cli
-[very_good_coverage_link]: https://github.com/marketplace/actions/very-good-coverage
-[very_good_ventures_link]: https://verygood.ventures
-[very_good_ventures_link_light]: https://verygood.ventures#gh-light-mode-only
-[very_good_ventures_link_dark]: https://verygood.ventures#gh-dark-mode-only
-[very_good_workflows_link]: https://github.com/VeryGoodOpenSource/very_good_workflows
-# SphinxVerify
+[license_badge_link]: License
+[pub_badge]: https://img.shields.io/pub/v/sphinx_verify
+[pub_badge_link]: https://pub.dev/packages/sphinx_verify

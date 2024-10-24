@@ -1,7 +1,7 @@
 name: sphinx_verify
-description: A Very Good Project created by Very Good CLI.
-version: 0.1.0+1
-publish_to: none
+description: Sphinx Verify is a Flutter package that amis to provider a interface to amazon recognition service. with built-in use cases.
+version: 1.0.0+1
+publish_to: https://pub.dev/packages/sphinx_verify
 
 environment:
   sdk: ^3.5.0
