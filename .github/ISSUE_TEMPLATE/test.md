@@ -1,8 +1,10 @@
 ---
 name: Test
 about: Adding missing tests or correcting existing tests
-title: "test: "
-labels: test
+title: 'test: '
+labels: ''
+assignees: ''
+
 ---
 
 **Description**

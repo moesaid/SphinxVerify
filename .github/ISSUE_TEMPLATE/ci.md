@@ -1,8 +1,10 @@
 ---
 name: Continuous Integration
 about: Changes to the CI configuration files and scripts
-title: "ci: "
-labels: ci
+title: 'ci: '
+labels: ''
+assignees: ''
+
 ---
 
 **Description**

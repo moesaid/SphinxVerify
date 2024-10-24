@@ -1,8 +1,10 @@
 ---
 name: Performance Update
 about: A code change that improves performance
-title: "perf: "
-labels: performance
+title: 'perf: '
+labels: ''
+assignees: ''
+
 ---
 
 **Description**
