@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/moesaid/SphinxVerify/blob/main/marketing/logo.png?raw=true" />
+  <img width="200" height="200" src="https://github.com/moesaid/SphinxVerify/blob/main/marketing/logo.png?raw=true" />
 </p>
 
 ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/thumbnail.jpg?raw=true)
