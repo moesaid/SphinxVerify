@@ -1,3 +1,5 @@
+![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/logo.png?raw=true)
+
 # Sphinx Verify
 
 [![pub package][pub_badge]][pub_badge_link]
