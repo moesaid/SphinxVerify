@@ -2,7 +2,6 @@
   <img src="https://github.com/moesaid/SphinxVerify/blob/main/marketing/logo.png?raw=true" />
 </p>
 
-![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/thumbnail.jpg?raw=true)
 ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_1.jpg?raw=true)
 ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_2.jpg?raw=true)
 ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_3.jpg?raw=true)
