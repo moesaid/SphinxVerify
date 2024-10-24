@@ -18,7 +18,7 @@
 [![pub package][pub_badge]][pub_badge_link]
 [![License: MIT][license_badge]][license_badge_link]
 
-Sphinx Verify is a Flutter package that amis to provider a SDK layer to amazon recognition service. with built-in use cases.
+Sphinx Verify is a Flutter package that amis to provider an interface to amazon recognition service. with built-in use cases.
 
 ---
 
@@ -36,7 +36,7 @@ Sphinx Verify is a Flutter package that amis to provider a SDK layer to amazon r
 
 ## Installation 💻
 
-**❗ In order to start using Sphinx Verify you must have the [Flutter SDK][flutter_install_link] installed on your machine.**
+**❗ In order to start using Sphinx Verify you must have the Fkutter installed on your machine.**
 
 Install via `flutter pub add`:
 
