@@ -41,6 +41,13 @@ Install via `flutter pub add`:
 flutter pub add sphinx_verify
 ```
 
+Install via `pubspec.yaml`:
+
+```yaml
+dependencies:
+  sphinx_verify: ^0.1.0
+```
+
 ---
 
 ## Usage 📖
@@ -50,9 +57,9 @@ import 'package:sphinx_verify/sphinx_verify.dart';
 
 /// initialize the sphinx verify
 SphinxVerify sphinxVerify = SphinxVerify(
-    region: AwsRegionEnum.usEast1,
-    accessKey: dotenv.env['ACCESS_KEY'] ?? '',
-    secretKey: dotenv.env['SECRET_KEY'] ?? '',
+    region: AwsRegionEnum.usEast1 <- adjust to your region,
+    accessKey: 'your access key',
+    secretKey: 'your secret key',
     onVerificationComplete: (FaceMatchesModel faceMatchesModel) {
         print({
         '❌similarity': faceMatchesModel.matchedFaces?.first.similarity,
