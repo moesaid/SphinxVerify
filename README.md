@@ -1,21 +1,12 @@
-<!-- <p align="center">
-  <img width="200" height="200" src="https://github.com/moesaid/SphinxVerify/blob/main/marketing/logo.png?raw=true" />
-</p> -->
-
 ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/thumbnail.jpg?raw=true)
 
 [![pub package][pub_badge]][pub_badge_link] [![License: MIT][license_badge]][license_badge_link]
 
-<!-- ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_1.jpg?raw=true) -->
-<!-- ![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_2.jpg?raw=true)
-![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_3.jpg?raw=true)
-![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_4.jpg?raw=true)
-![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_5.jpg?raw=true)
-![Sphinx Verify logo](https://github.com/moesaid/SphinxVerify/blob/main/marketing/demo_6.jpg?raw=true) -->
-
 # Sphinx Verify
 
 Sphinx Verify is a Flutter package that amis to provider an interface to amazon recognition service. with built-in use cases.
+
+[More demo images](DEMO.md)
 
 ---
 
