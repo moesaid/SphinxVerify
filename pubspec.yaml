@@ -2,7 +2,7 @@ name: sphinx_verify
 description: Sphinx Verify is a Flutter package that amis to provider a interface to amazon recognition service. with built-in use cases.
 homepage: https://github.com/moesaid/SphinxVerify
 repository: https://github.com/moesaid/SphinxVerify
-version: 1.0.1
+version: 1.0.2
 screenshots:
   - description: "Sphinx Verify is a Flutter package that amis to provider a interface to amazon recognition service. with built-in use cases."
     path: marketing/logo.png

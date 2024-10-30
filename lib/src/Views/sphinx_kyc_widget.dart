@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sphinx_verify/sphinx_verify.dart';
 import 'package:sphinx_verify/src/Data/Services/kyc_services.dart';
-import 'package:sphinx_verify/src/Views/widgets/build_missing_prams_widget.dart';
+import 'package:sphinx_verify/src/Views/Widgets/build_missing_prams_widget.dart';
 
 /// sphinx kyc widget
 class SphinxKycWidget extends StatefulWidget {

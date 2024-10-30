@@ -1,7 +1,11 @@
-## 1.0.0
+## 1.0.2
 
-initial release
+Fixed -- missing links
 
 ## 1.0.1
 
 updated pubspec.yaml for publishing
+
+## 1.0.0
+
+initial release
