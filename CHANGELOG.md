@@ -1,3 +1,9 @@
+# Changelog
+
+## 1.0.3
+
+updated dependencies
+
 ## 1.0.2
 
 Fixed -- missing links
